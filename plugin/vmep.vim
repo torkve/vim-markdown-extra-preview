@@ -148,5 +148,5 @@ display(template, file_ext, context)
 PYTHON
 endfunction
 
-:command! Me :call PreviewME('')
-:command! Mer :call PreviewME('True')
+command! Me :call PreviewME('')
+command! Mer :call PreviewME('True')
