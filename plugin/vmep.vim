@@ -2,7 +2,7 @@
 " ===========================
 "
 " A Python port of <http://github.com/robgleeson/vim-markdown-preview>.
-" 
+"
 " This is a direct port - except that Python-Markdown is used rather then the
 " Ruby library 'kramdown'. This gives us Python-Markdown's extensions (extra,
 " etc.).
@@ -10,7 +10,7 @@
 " Copyright (C) 2011 Waylan Limberg <waylan@gmail.com>
 " Copyright (C) 2012 joe di castro  <joe@joedicastro.com>
 "
-" vim-markdown-extra-preview is free software: you can redistribute it and/or 
+" vim-markdown-extra-preview is free software: you can redistribute it and/or
 " modify it under the terms of the GNU General Public License as published by
 " the Free Software Foundation, either version 3 of the License, or
 " (at your option) any later version.
@@ -22,7 +22,7 @@
 "
 " You should have received a copy of the GNU General Public License
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 
 if !has('python')
     echo "Error: Vim must be compiled with Python support (+python)."
@@ -121,16 +121,16 @@ def display(template, file_ext, context):
     """ Write temp file to disk and display in browser. """
     reader = get_setting('VMEPhtmlreader')
     output_dir = get_setting('VMEPoutputdirectory')
-    if not output_dir: 
+    if not output_dir:
         output_dir = gettempdir()
-    else: 
+    else:
         output_dir = path.realpath(output_dir)
         if not path.isdir(output_dir):
             makedirs(output_dir)
     name = context['name'].replace(' ', '_') + file_ext
     file = path.join(output_dir, name)
     f = codecs.open(file, 'w', encoding='utf-8', errors='xmlcharrefreplace')
-    f.write(template % context)  
+    f.write(template % context)
     f.close()
     refresh = bool(vim.eval('a:refresh'))
     if not refresh:
