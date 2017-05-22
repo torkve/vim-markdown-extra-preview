@@ -24,8 +24,12 @@
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-if !has('python')
-    echo "Error: Vim must be compiled with Python support (+python)."
+if has("python")
+    command! -nargs=1 VMEPPython python <args>
+elseif has("python3")
+    command! -nargs=1 VMEPPython python3 <args>
+else
+    echo "Error: Vim must be compiled with Python support (+python or +python3)."
     finish
 endif
 
@@ -56,7 +60,7 @@ endif
 let s:script_dir = expand("<sfile>:p:h")
 
 function! PreviewME(refresh)
-python << PYTHON
+VMEPPython << PYTHON
 
 import vim, sys, imp, codecs, webbrowser
 from os import path, makedirs, linesep
@@ -92,13 +96,14 @@ def build_context(markdown):
         raise Exception('Your file is not saved.')
     name, ext = path.splitext(path.basename(buffer.name))
     body = linesep.join(buffer)
+    if sys.version_info[0] < 3:
+        body = unicode(body, 'utf-8')
     style = get_setting('VMEPstylesheet')
     if not path.isfile(style):
         style = path.join(base, 'stylesheets', style)
     context = dict(
         name = name.replace('_', ' '),
-        # content = markdown.convert(body),
-        content = markdown.convert(unicode(body, 'utf-8')),
+        content = markdown.convert(body),
         style = style,
     )
     if hasattr(markdown, 'Meta'):

@@ -6,8 +6,8 @@ This plugin passes the current buffer through Python-Markdown (with the
 browser. 
 
 The Python-Markdown library is included. However, Vim must be compiled with 
-Python support (`+python`) and the matching version of Python must be 
-installed on the system. The plugin checks this when called and will fail
+Python support (`+python` or `+python3`) and the matching version of Python must
+be installed on the system. The plugin checks this when called and will fail
 with an error message if Python is not available.
 
 ## Usage
